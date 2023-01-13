@@ -35,17 +35,18 @@ const GetOneActivity = async (req,res,next) => {
 
 const postActivity = async (req,res,next) => {
     let {name, description, images,subCategoryId, townId } = req.body
-    // console.log(name, description, images)
+    // console.log(subCategoryId)
     try{
-        await Activities.create({
+        const activity = await Activities.create({
             name: name,
             description: description,
             images: images,
             likes: 0,
-            // subCategoryId: subCategoryId,
-            // townId: townId
+            subCategoryId: subCategoryId,
+            townId: townId
         })
-        // activity.addSubCategories(subCategoryId)
+        // await activity.addsubCategoryId(subCategoryId);
+
         res.send({msg: "la actividad fue agragada"})
     }catch(err){
         console.log(err)

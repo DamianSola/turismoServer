@@ -45,9 +45,9 @@ const putSubCategory = async (req,res,next) => {
 }
 
 const postSubCategory = async (req,res,next) => {
-    let {name} = req.body;
+    let {name, categoryId} = req.body;
     try{
-        await SubCategories.create({name: name})
+        await SubCategories.create({name: name, categoryId:categoryId})
         res.send({msg: "new sub category was created"})
     }catch(err){
         next(err)

@@ -4,11 +4,17 @@ module.exports = (sequelize) => {
     sequelize.define("service", {
         name:{
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            validate:{
+                notEmpty: true, 
+            }
         },
         phone:{
-            type: DataTypes.INTEGER,
-            allowNull: false
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate:{
+                isNumeric: true, 
+            }
         },
         webSite:{
             type: DataTypes.STRING,

@@ -5,9 +5,9 @@ module.exports = (sequelize) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            validator: {
-                is: "+1"
-            } 
+            validate:{
+                notEmpty: true, 
+            }
         },
         description:{
             type: DataTypes.TEXT,
