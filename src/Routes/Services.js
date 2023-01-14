@@ -1,11 +1,11 @@
 const {Router} = require("express")
-const { getAllServices,postService } = require("../Controllers/Services.js")
+const { getAllServices,postService,putService,GetServiceById,delteService } = require("../Controllers/Services.js")
 const router = Router()
 
 router.get('/', getAllServices)
-// router.get('/:id', getOneSubCategory)
+router.get('/:id', GetServiceById)
 router.post('/', postService)
-// router.put('/:id', putSubCategory)
-// router.delete('/:id', deleteSubCategory)
+router.put('/:id', putService)
+router.delete('/:id', delteService)
 
 module.exports = router

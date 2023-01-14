@@ -37,4 +37,49 @@ const postService = async (req,res,next) => {
     }
 }
 
-module.exports = {getAllServices,postService}
+
+const putService = async (req, res, next) => {
+    let {id} = req.params;
+    let {name, phone, webSite, Adress, description, images, punctuation, open, serviceTypeId } = req.body
+    // console.log(req.body)
+    // res.send(req.body)
+    try {
+        let service = await Service.update({
+            name: name && name,
+            phone: phone && phone,
+            webSite: webSite && webSite,
+            Adress: Adress && Adress,
+            description: description && description,
+            images: images && images,
+            punctuation: punctuation && punctuation,
+            open: open !== null && open,
+            serviceTypeId: serviceTypeId && serviceTypeId
+        },{where: {id:id}})
+        res.send([{msg:"ok"}, service])
+    } catch (error) {
+        next(error)
+    }
+}
+
+const GetServiceById = async (req, res, next) => {
+    let {id} = req.params
+    try {
+        let service = await Service.findOne({where:{id: id}})
+        service ? res.send(service) : res.send({msg: "service not found"}) 
+    } catch (error) {
+        next(error)
+    }
+}
+
+const delteService = async (req, res, next)=>{
+    let {id} = req.params;
+    try {
+        let serv = await Service.destroy({where:{id:id}})
+        serv === 1? res.send({msg:"the service was deleted"}): res.send({msg:"the service was not delted"})
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+module.exports = {getAllServices,postService, putService,GetServiceById,delteService}

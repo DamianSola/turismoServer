@@ -36,9 +36,9 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER
         },
         id:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV1,
             primaryKey: true,
-            autoIncrement: true
         },
         open:{
             type: DataTypes.BOOLEAN,

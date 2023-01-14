@@ -90,6 +90,9 @@ const putActivity = async (req, res, next) => {
         name && await Activities.update({name:name},{where:{id:id}})
         description && await Activities.update({description:description},{where:{id:id}})
         images && await Activities.update({images:images}, {where:{id:id}})
+        townId && await Activities.update({townId:townId}, {where:{id:id}})
+        subCategoryId && await Activities.update({towsubCategoryIdnId:subCategoryId}, {where:{id:id}})
+
         res.send({msg:"OK"})
     }catch(err){
         console.log(err)
