@@ -8,8 +8,8 @@ const GetAllCategories = async (req,res,next) => {
             let category = await Categories.findOne({where:{name:name}});
             category? res.send(category) : res.send({msg: "category not found"})
         }else {
-            let allCategories = await Categories.findAll()
-            res.send(allCategories)
+            const { count, rows } = await Categories.findAndCountAll()
+            res.send( { count, rows} )
         }
     }catch(err){
         console.log(err)

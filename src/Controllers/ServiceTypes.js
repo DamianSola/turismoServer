@@ -1,10 +1,16 @@
 const {ServiceTypes} = require('../db.js')
 
 const getAllServiceTypes = async (req,res,next) => {
+    let {name} = req.query
 
     try {
-        let serviceTypes = await ServiceTypes.findAll()
-        res.send(serviceTypes)
+        if(!name){
+            let  { count, rows }  = await ServiceTypes.findAndCountAll()
+            res.send( { count, rows } )
+        }else{
+            let serviceType = await ServiceTypes.findOne({where:{id : id}})
+            res.send(serviceType)
+        }
     } catch (error) {
         next(error)
     }

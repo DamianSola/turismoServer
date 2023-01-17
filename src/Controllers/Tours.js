@@ -5,8 +5,8 @@ const GetAllTours = async (req,res,next) => {
     let {name} = req.query;
     try{
         if(!name){
-            let Alltours = await Tours.findAll()
-            res.send(Alltours)
+            let  { count, rows }  = await Tours.findAndCountAll()
+            res.send( { count, rows } )
         }else{
             let tour = await Tours.findOne({where: {name:name}})
             tour? res.send(tour) : res.send({msg: "tour not found"})

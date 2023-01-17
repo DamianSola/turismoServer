@@ -68,8 +68,8 @@ Categories.hasMany(SubCategories) // corregido
 Activities.belongsToMany(Culture, {through:'activities_culture'})
 Culture.belongsToMany(Activities, {through:'activities_culture' })
 ServiceTypes.hasMany(Service) // corregido
-Service.belongsToMany(Tours, {through: "service-tours"}) // corregido
-Tours.belongsToMany(Service, {through: "service-tours"})// corregido
+Service.belongsToMany(Tours, {through: 'service_tours'}) // corregido
+Tours.belongsToMany(Service, {through:'service_tours'})// corregido
 
 // Activities.belongsToMany(Towns, {through:'activities_tows'})
 // Towns.belongsToMany(Activities, {through:'activities_tows'})

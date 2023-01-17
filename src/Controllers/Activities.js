@@ -1,4 +1,3 @@
-const axios  = require('axios')
 // const { where } = require('sequelize')
 const {Activities} = require('../db.js')
 
@@ -8,8 +7,8 @@ const GetAllActivities = async (req,res,next) => {
     let {name} = req.query
     try{
         if(!name){
-            const AllActivities = await Activities.findAll()
-            res.send(AllActivities)
+            const {count, rows} = await Activities.findAndCountAll()
+            res.send( {title: "ACTIVITIES", count, rows} ) 
         }else{
             const activity = await Activities.findOne({where: {name: name}})
             activity? res.send(activity) :  res.send({msg: "activity not found"}).status(404)

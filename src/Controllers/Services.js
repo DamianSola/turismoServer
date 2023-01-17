@@ -7,8 +7,8 @@ const getAllServices = async (req,res,next) => {
             let service = await Service.findOne({where: {name: name}})
             res.send(service)
         }else{
-            let services = await Service.findAll()
-            res.send(services)
+            const { count, rows } = await Service.findAndCountAll()
+            res.send( { count, rows } )
         }
     } catch (error) {
         next(error)

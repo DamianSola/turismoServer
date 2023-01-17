@@ -7,8 +7,8 @@ const GetAllSubCategories = async (req,res,next) => {
             let subCategory = await SubCategories.findOne({where: {name: name}});
             subCategory ? res.send(subCategory) : res.send({msg: "sub category not found"})
         }else{
-            let allSubCategories = await SubCategories.findAll()
-            res.send(allSubCategories)
+            let  { count, rows }  = await SubCategories.findAndCountAll()
+            res.send( { count, rows } )
         }
     }catch(err){
         next(err)
