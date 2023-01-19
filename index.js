@@ -3,7 +3,7 @@ const {conn} = require("./src/db.js")
 const cors = require('cors')
 
 
-// Syncing all the models at once.
+// Syncing all the models at once..
 conn.sync({ force: true }).then(() => {
   server.use(cors())
   server.listen(3001, () => {
