@@ -1,4 +1,4 @@
-const {SubCategories} = require("../db.js")
+const {SubCategories, Activities} = require("../db.js")
 
 const GetAllSubCategories = async (req,res,next) => {
     let {name} = req.query
@@ -7,8 +7,8 @@ const GetAllSubCategories = async (req,res,next) => {
             let subCategory = await SubCategories.findOne({where: {name: name}});
             subCategory ? res.send(subCategory) : res.send({msg: "sub category not found"})
         }else{
-            let  { count, rows }  = await SubCategories.findAndCountAll()
-            res.send( { count, rows } )
+            let subcategories  = await SubCategories.findAll({include:{model: Activities, as:"activities"}})
+            res.send( subcategories )
         }
     }catch(err){
         next(err)
@@ -45,9 +45,11 @@ const putSubCategory = async (req,res,next) => {
 }
 
 const postSubCategory = async (req,res,next) => {
-    let {name, categoryId} = req.body;
+    let {name, categoryId, actividad} = req.body;
     try{
-        await SubCategories.create({name: name, categoryId:categoryId})
+        await SubCategories.create({name: name, categoryId:categoryId},
+            // {include:[{model: Activities, as: "actividad", forenigKey: actividad }]}
+            )
         res.send({msg: "new sub category was created"})
     }catch(err){
         next(err)

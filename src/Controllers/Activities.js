@@ -1,5 +1,5 @@
 // const { where } = require('sequelize')
-const {Activities} = require('../db.js')
+const {Activities,SubCategories} = require('../db.js')
 
 
 
@@ -7,8 +7,10 @@ const GetAllActivities = async (req,res,next) => {
     let {name} = req.query
     try{
         if(!name){
-            const {count, rows} = await Activities.findAndCountAll()
-            res.send( {title: "ACTIVITIES", count, rows} ) 
+            const {count, rows} = await Activities.findAndCountAll(
+                {include:{model: SubCategories, as: "subCategory"}}
+                )
+            res.send({count, rows}) 
         }else{
             const activity = await Activities.findOne({where: {name: name}})
             activity? res.send(activity) :  res.send({msg: "activity not found"}).status(404)
@@ -36,15 +38,18 @@ const postActivity = async (req,res,next) => {
     let {name, description, images,subCategoryId, townId } = req.body
     // console.log(subCategoryId)
     try{
+        const subCat = await SubCategories.findByPk(subCategoryId)
         const activity = await Activities.create({
             name: name,
             description: description,
             images: images,
             likes: 0,
-            subCategoryId: subCategoryId,
-            townId: townId
-        })
-        // await activity.addsubCategoryId(subCategoryId);
+            subCategoryId:subCategoryId
+        },
+        {   include:[{model: SubCategories, as: "subCategory"}]}
+        )
+        // const subCat = await SubCategories.findByPk(subCategoryId)
+        // await subCat.addActivity(activity);
 
         res.send({msg: "la actividad fue agragada"})
     }catch(err){

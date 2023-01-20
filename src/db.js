@@ -62,14 +62,22 @@ sequelize.models = Object.fromEntries(capsEntries);
 // console.log(sequelize.models)
 const {Activities, Towns, Categories, SubCategories, Culture, Service, ServiceTypes, Tours,} = sequelize.models
 
-Towns.hasMany(Activities)//corregido
-SubCategories.hasMany(Activities) // corregido
-Categories.hasMany(SubCategories) // corregido
+Towns.hasMany(Activities)
+
+SubCategories.hasMany(Activities, {as: "activities", forenigKey: "activityId"}) 
+Activities.belongsTo(SubCategories, {as: "subCategory", forenigKey: "subCategoryId"})
+
+Categories.hasMany(SubCategories, {as: "subCategories", forenigKey: "subCategoyId"}) 
+SubCategories.belongsTo(Categories, {as: "category", forenigKey: "categoryId"})
+
 Activities.belongsToMany(Culture, {through:'activities_culture'})
 Culture.belongsToMany(Activities, {through:'activities_culture' })
-ServiceTypes.hasMany(Service) // corregido
-Service.belongsToMany(Tours, {through: 'service_tours'}) // corregido
-Tours.belongsToMany(Service, {through:'service_tours'})// corregido
+
+ServiceTypes.hasMany(Service, {as: "services", forenigKey: "subCategoyId"}) 
+Service.belongsTo(ServiceTypes, {as: "serviceType", forenigKey: "serviceTypeId"})
+
+Service.belongsToMany(Tours, {through: 'service_tours'}) 
+Tours.belongsToMany(Service, {through:'service_tours'})
 
 // Activities.belongsToMany(Towns, {through:'activities_tows'})
 // Towns.belongsToMany(Activities, {through:'activities_tows'})

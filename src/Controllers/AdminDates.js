@@ -22,7 +22,6 @@ const ResumeAllDates = async (req,res,next) => {
     }
 
    let alldate = await CountAll()
-    // console.log(count, rows)
     res.send(alldate)
 
 

@@ -1,10 +1,10 @@
-const {Service} = require('../db.js')
+const {Service, Tours} = require('../db.js')
 
 const getAllServices = async (req,res,next) => {
     let {name} = req.query
     try {
         if(name){
-            let service = await Service.findOne({where: {name: name}})
+            let service = await Service.findOne({where: {name: name}, include:{Tours}})
             res.send(service)
         }else{
             const { count, rows } = await Service.findAndCountAll()
