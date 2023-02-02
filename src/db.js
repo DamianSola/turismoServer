@@ -62,7 +62,9 @@ sequelize.models = Object.fromEntries(capsEntries);
 // console.log(sequelize.models)
 const {Activities, Towns, Categories, SubCategories, Culture, Service, ServiceTypes, Tours,} = sequelize.models
 
-Towns.hasMany(Activities)
+Towns.belongsToMany(Activities, {through:'towns_activities'})
+Activities.belongsToMany(Towns, {through:'towns_activities'} )
+
 
 SubCategories.hasMany(Activities, {as: "activities", forenigKey: "activityId"}) 
 Activities.belongsTo(SubCategories, {as: "subCategory", forenigKey: "subCategoryId"})

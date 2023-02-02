@@ -1,18 +1,23 @@
-const {Categories} = require('../db.js')
+const {Categories, SubCategories} = require('../db.js')
 const axios = require('axios')
 
 const GetAllCategories = async (req,res,next) => {
     let {name} = req.query;
     try{
         if(name) {
-            let category = await Categories.findOne({where:{name:name}});
+            let category = await Categories.findOne({where:{name:name},
+            include: {model: SubCategories,  as: "subCategories"}
+            });
+
             category? res.send(category) : res.send({msg: "category not found"})
         }else {
-            const { count, rows } = await Categories.findAndCountAll()
+            const { count, rows } = await Categories.findAndCountAll({
+                include: {model: SubCategories,  as: "subCategories"}
+            })
             res.send( { count, rows} )
         }
     }catch(err){
-        console.log(err)
+        // console.log(err)
         next(err)
     }
 }
@@ -20,7 +25,9 @@ const GetAllCategories = async (req,res,next) => {
 const GetByIdCategory = async (req,res,next) => {
     let {id} = req.params;
     try{
-        let category = await Categories.findByPk(id)
+        let category = await Categories.findByPk(id,{
+            include: {model: SubCategories,  as: "subCategories"}
+        })
         category? res.send(category) : res.send({msg:"category not found"})
     }catch(err){
         next(err)
