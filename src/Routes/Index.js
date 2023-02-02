@@ -14,4 +14,5 @@ router.use("/subcategories", require("./SubCategories.js"))
 router.use('/services', require("./Services.js"))
 router.use('/serviceTypes', require('./ServiceTypes'))
 router.use('/admin', require('./Admin'))
+router.use('/towns', require('./Towns'))
 module.exports = router

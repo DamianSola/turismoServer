@@ -1,13 +1,19 @@
-const {SubCategories, Activities} = require("../db.js")
+const {SubCategories, Activities, Categories} = require("../db.js")
 
 const GetAllSubCategories = async (req,res,next) => {
     let {name} = req.query
     try{
         if(name) {
-            let subCategory = await SubCategories.findOne({where: {name: name}});
+            let subCategory = await SubCategories.findOne({where: {name: name},
+                include:{model: Activities, as:"activities"}, 
+                include:{model: Categories, as: "category"}
+            });
             subCategory ? res.send(subCategory) : res.send({msg: "sub category not found"})
         }else{
-            let subcategories  = await SubCategories.findAll({include:{model: Activities, as:"activities"}})
+            let subcategories  = await SubCategories.findAll({
+                include:{model: Activities, as:"activities"},
+                include:{model: Categories, as: "category"}
+            })
             res.send( subcategories )
         }
     }catch(err){
@@ -18,7 +24,10 @@ const GetAllSubCategories = async (req,res,next) => {
 const getOneSubCategory = async (req,res,next) => {
     let {id} = req.params;
     try{
-        let subCategory = await SubCategories.findByPk(id);
+        let subCategory = await SubCategories.findByPk(id, {
+            include:{model: Activities, as:"activities"},
+            include:{model: Categories, as: "category"}
+        });
         subCategory ? res.send(subCategory) : res.send({msg: "sub category not found"})
     }catch(err){
         next(err)
