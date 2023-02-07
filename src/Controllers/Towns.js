@@ -10,8 +10,8 @@ const getAllTowns = async (req, res, next) => {
             const town = await Towns.findOne({where: {name:name}})
             town? res.send(town) : res.send({msg:"town not found"})
         }
-        const {count , rows} = await Towns.findAndCount({
-            include: {Activities}
+        const {count , rows} = await Towns.findAndCountAll({
+            include: {model: Activities}
         })
         res.send({count , rows})
     } catch (error) {

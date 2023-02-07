@@ -35,9 +35,9 @@ const GetByIdCategory = async (req,res,next) => {
 }
 
 const postCategories = async (req, res, next) => {
-    let {name} = req.body
+    let {name, image} = req.body
     try{
-        await Categories.create({name:name})
+        await Categories.create({name:name, image:image})
         res.send({msg: "new category was created"})
     }catch(err){
         console.log(err)

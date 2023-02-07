@@ -12,7 +12,7 @@ const GetAllSubCategories = async (req,res,next) => {
         }else{
             let subcategories  = await SubCategories.findAll({
                 include:{model: Activities, as:"activities"},
-                include:{model: Categories, as: "category"}
+                // include:{model: Categories, as: "category"}
             })
             res.send( subcategories )
         }
@@ -26,7 +26,7 @@ const getOneSubCategory = async (req,res,next) => {
     try{
         let subCategory = await SubCategories.findByPk(id, {
             include:{model: Activities, as:"activities"},
-            include:{model: Categories, as: "category"}
+            // include:{model: Categories, as: "category"}
         });
         subCategory ? res.send(subCategory) : res.send({msg: "sub category not found"})
     }catch(err){
@@ -54,9 +54,9 @@ const putSubCategory = async (req,res,next) => {
 }
 
 const postSubCategory = async (req,res,next) => {
-    let {name, categoryId, actividad} = req.body;
+    let {name, categoryId, actividad, image} = req.body;
     try{
-        await SubCategories.create({name: name, categoryId:categoryId},
+        await SubCategories.create({name: name, categoryId:categoryId, image:image},
             // {include:[{model: Activities, as: "actividad", forenigKey: actividad }]}
             )
         res.send({msg: "new sub category was created"})
