@@ -10,11 +10,11 @@ const GetAllSubCategories = async (req,res,next) => {
             });
             subCategory ? res.send(subCategory) : res.send({msg: "sub category not found"})
         }else{
-            let subcategories  = await SubCategories.findAll({
+            let {count, rows}  = await SubCategories.findAndCountAll({
                 include:{model: Activities, as:"activities"},
                 // include:{model: Categories, as: "category"}
             })
-            res.send( subcategories )
+            res.send( {count, rows} )
         }
     }catch(err){
         next(err)
@@ -25,8 +25,10 @@ const getOneSubCategory = async (req,res,next) => {
     let {id} = req.params;
     try{
         let subCategory = await SubCategories.findByPk(id, {
-            include:{model: Activities, as:"activities"},
-            // include:{model: Categories, as: "category"}
+            include:[
+                {model: Activities, as:"activities"},
+            {model: Categories, as: "category"}
+        ]
         });
         subCategory ? res.send(subCategory) : res.send({msg: "sub category not found"})
     }catch(err){

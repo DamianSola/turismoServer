@@ -1,4 +1,4 @@
-const {Tours} = require("../db.js")
+const {Tours, Service} = require("../db.js")
 
 
 const GetAllTours = async (req,res,next) => {
@@ -19,7 +19,7 @@ const GetAllTours = async (req,res,next) => {
 const getOneTour = async (req,res,next) => {
     let {id} = req.params;
   try{
-        let tour = await Tours.findByPk(id)
+        let tour = await Tours.findByPk(id, {include:{model: Service}})
         tour? res.send(tour) : res.send({msg: "tour not found"})
     }catch(err){
         next(err)
@@ -49,11 +49,12 @@ const postTour = async (req,res,next) => {
 }
 const putTour = async (req,res,next) => {
     let {id} = req.params;
-    let {name, description, image} = req.body;
+    let {name, description, image,services} = req.body;
     try{
         name && await Tours.update({name:name},{where:{id:id}})
         description && await Tours.update({description:description},{where:{id:id}})
-        image && await Tours.update({image:image}, {where:{id:id}})
+        image && await Tours.update({image:image}, {where:{id:id}}),
+        services && await Tours.update({services:services}, {where:{id:id}})
         res.send({msg: "OK"})
     }catch(err){
         next(err)

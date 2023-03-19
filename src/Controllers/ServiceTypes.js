@@ -1,4 +1,4 @@
-const {ServiceTypes} = require('../db.js')
+const {ServiceTypes, Service} = require('../db.js')
 
 const getAllServiceTypes = async (req,res,next) => {
     let {name} = req.query
@@ -19,7 +19,10 @@ const getAllServiceTypes = async (req,res,next) => {
 const getServiceTypeById = async (req,res,next) => {
     let {id} = req.params
     try {
-        let serviceType = await ServiceTypes.findOne({where:{id:id}})
+        let serviceType = await ServiceTypes.findOne({where:{id:id},
+            include:{model:Service, as: "services"}}
+            )
+
         serviceType? res.send(serviceType) : res.send({msg:"service type not found"})
     } catch (error) {
         next(error)   
