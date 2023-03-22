@@ -35,12 +35,15 @@ const DeleteTour = async (req,res,next) => {
     }
 }
 const postTour = async (req,res,next) => {
-    let {image, description, name} = req.body;
+    let {image, description, name, services} = req.body;
     try{
         await Tours.create({
             name:name,
             description: description,
-            image: image
+            image: image,
+            servicesId: services,
+        },{
+            include:{model: Service}
         })
         res.send({msg: "tour was created"})
     }catch(err){
