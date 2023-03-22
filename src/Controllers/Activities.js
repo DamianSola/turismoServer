@@ -1,5 +1,5 @@
-// const { where } = require('sequelize')
-const {Activities,SubCategories} = require('../db.js')
+const {Activities,SubCategories, Towns} = require('../db.js')
+
 
 
 
@@ -25,10 +25,11 @@ const GetAllActivities = async (req,res,next) => {
 const GetOneActivity = async (req,res,next) => {
     let {id} = req.params;
     try{
-        let activity = await Activities.findByPk(id)
+        let activity = await Activities.findByPk(id, {include:[
+            {model: Towns, as: "towns"}, {model: SubCategories, as: "subCategory"}
+        ]})
         activity? res.send(activity) : res.send({msg: "activity not found"}).status(404)
     }catch(err){
-        console.log(err)
         next(err)
     }
     
@@ -44,9 +45,10 @@ const postActivity = async (req,res,next) => {
             description: description,
             images: images,
             likes: 0,
-            subCategoryId:subCategoryId
+            subCategoryId:subCategoryId,
+            townId: townId
         },
-        {   include:[{model: SubCategories, as: "subCategory"}]}
+        {   include:[{model: SubCategories, as: "subCategory"}, {model: Towns, as:'towns'}]}
         )
         // const subCat = await SubCategories.findByPk(subCategoryId)
         // await subCat.addActivity(activity);
@@ -86,7 +88,7 @@ const deleteActivity = async (req, res, next) => {
 }
 
 const putActivity = async (req, res, next) => {
-    let {name, description,images,townId,subCategoryId} = req.body
+    let {name, description,images,townsId,subCategoryId} = req.body
     let {id} = req.params
     console.log(req.body)
     try{ 
@@ -94,8 +96,8 @@ const putActivity = async (req, res, next) => {
         name && await Activities.update({name:name},{where:{id:id}})
         description && await Activities.update({description:description},{where:{id:id}})
         images && await Activities.update({images:images}, {where:{id:id}})
-        townId && await Activities.update({townId:townId}, {where:{id:id}})
-        subCategoryId && await Activities.update({towsubCategoryIdnId:subCategoryId}, {where:{id:id}})
+        townsId && await Activities.update({townsId:townsId}, {where:{id:id}})
+        subCategoryId && await Activities.update({towsubCategoryId:subCategoryId}, {where:{id:id}})
 
         res.send({msg:"OK"})
     }catch(err){
