@@ -13,7 +13,7 @@ const GetAllActivities = async (req,res,next) => {
             res.send({count, rows}) 
         }else{
             const activity = await Activities.findOne({where: {name: name}})
-            activity? res.send(activity) :  res.send({msg: "activity not found"}).status(404)
+            activity? res.send(activity) :  res.status(404).send({msg: "activity not found"})
         }
     }catch(err){
         console.log(err)
