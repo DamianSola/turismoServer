@@ -1,4 +1,4 @@
-const {DataTypes} = require('sequelize')
+const {DataTypes, STRING} = require('sequelize')
 
 module.exports = (sequelize) => {
     sequelize.define( 'tours', {
@@ -9,8 +9,8 @@ module.exports = (sequelize) => {
         description:{
             type:DataTypes.TEXT,
         },
-        image:{
-            type: DataTypes.STRING,
+        images:{
+            type: DataTypes.ARRAY(STRING),
         },
         id:{
             type: DataTypes.INTEGER,

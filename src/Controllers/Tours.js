@@ -40,7 +40,7 @@ const postTour = async (req,res,next) => {
         await Tours.create({
             name:name,
             description: description,
-            image: image,
+            images: image,
             servicesId: services,
         },{
             include:{model: Service}

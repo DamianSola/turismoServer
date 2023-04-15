@@ -1,4 +1,4 @@
-const {Activities,SubCategories, Towns} = require('../db.js')
+const {Activities,SubCategories, Towns, Service} = require('../db.js')
 
 
 
@@ -26,7 +26,7 @@ const GetOneActivity = async (req,res,next) => {
     let {id} = req.params;
     try{
         let activity = await Activities.findByPk(id, {include:[
-            {model: Towns, as: "towns"}, {model: SubCategories, as: "subCategory"}
+            {model: Towns, as: "towns"}, {model: SubCategories, as: "subCategory"}, {model:Service}
         ]})
         activity? res.send(activity) : res.send({msg: "activity not found"}).status(404)
     }catch(err){
@@ -36,27 +36,27 @@ const GetOneActivity = async (req,res,next) => {
 }
 
 const postActivity = async (req,res,next) => {
-    let {name, description, images,subCategoryId, townId } = req.body
-    // console.log(subCategoryId)
+    let {name, description, images,subCategoryId, townId, services } = req.body
     try{
-        const subCat = await SubCategories.findByPk(subCategoryId)
+        // const subCat = await SubCategories.findByPk(subCategoryId)
         const activity = await Activities.create({
             name: name,
             description: description,
             images: images,
             likes: 0,
             subCategoryId:subCategoryId,
-            townId: townId
+            townId: townId, 
         },
-        {   include:[{model: SubCategories, as: "subCategory"}, {model: Towns, as:'towns'}]}
+        {   include:[
+            {model: SubCategories, as: "subCategory"},
+            {model: Towns, as:'towns'}, 
+        ]}
         )
-        // const subCat = await SubCategories.findByPk(subCategoryId)
-        // await subCat.addActivity(activity);
+        await activity.addService(services)
 
         res.send({msg: "la actividad fue agragada"})
     }catch(err){
         console.log(err)
-        // res.send({msg: "could not add activity"})
         next(err)
     }
 }
