@@ -5,7 +5,9 @@ const getAllServiceTypes = async (req,res,next) => {
 
     try {
         if(!name){
-            let  { count, rows }  = await ServiceTypes.findAndCountAll()
+            let  { count, rows }  = await ServiceTypes.findAndCountAll(
+                {include:{model: Service, as: "services"}}
+            )
             res.send( { count, rows } )
         }else{
             let serviceType = await ServiceTypes.findOne({where:{id : id}})

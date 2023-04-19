@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         description:{
             type:DataTypes.TEXT,
         },
-        images:{
+        image:{
             type: DataTypes.ARRAY(STRING),
         },
         id:{

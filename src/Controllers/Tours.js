@@ -40,7 +40,7 @@ const postTour = async (req,res,next) => {
         await Tours.create({
             name:name,
             description: description,
-            images: images,
+            image: images,
             servicesId: services,
         },{
             include:{model: Service}
@@ -52,11 +52,11 @@ const postTour = async (req,res,next) => {
 }
 const putTour = async (req,res,next) => {
     let {id} = req.params;
-    let {name, description, images,services} = req.body;
+    let {name, description, image,services} = req.body;
     try{
         name && await Tours.update({name:name},{where:{id:id}})
         description && await Tours.update({description:description},{where:{id:id}})
-        images && await Tours.update({images:images}, {where:{id:id}}),
+        image && await Tours.update({image:image}, {where:{id:id}}),
         services && await Tours.update({services:services}, {where:{id:id}})
         res.send({msg: "OK"})
     }catch(err){
