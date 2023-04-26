@@ -10,7 +10,7 @@ const getAllServiceTypes = async (req,res,next) => {
             )
             res.send( { count, rows } )
         }else{
-            let serviceType = await ServiceTypes.findOne({where:{id : id}})
+            let serviceType = await ServiceTypes.findOne({where: {name: name}})
             res.send(serviceType)
         }
     } catch (error) {
