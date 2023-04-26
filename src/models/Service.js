@@ -12,9 +12,9 @@ module.exports = (sequelize) => {
         phone:{
             type: DataTypes.STRING,
             allowNull: false,
-            validate:{
-                isNumeric: true, 
-            }
+            // validate:{
+            //     isNumeric: true, 
+            // }
         },
         webSite:{
             type: DataTypes.STRING,
@@ -29,11 +29,11 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         images: {
-            type: DataTypes.ARRAY(STRING),
+            type: DataTypes.STRING,
             allowNull: true
         },
         punctuation: {
-            type: DataTypes.INTEGER
+            type: DataTypes.FLOAT
         },
         id:{
             type: DataTypes.UUID,

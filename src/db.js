@@ -68,6 +68,9 @@ const {Activities, Towns, Categories, SubCategories, Culture, Service, ServiceTy
 Towns.hasMany(Activities,{as: "activities", forenigKey: "activityId"})
 Activities.belongsTo(Towns, {as: "towns", forenigKey: "townsId"})
 
+Service.belongsToMany(Activities, {through: "service_activity"})
+Activities.belongsToMany(Service, {through: "service_activity"})
+
 
 SubCategories.hasMany(Activities, {as: "activities", forenigKey: "activityId"}) 
 Activities.belongsTo(SubCategories, {as: "subCategory", forenigKey: "subCategoryId"})

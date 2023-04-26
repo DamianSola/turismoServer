@@ -8,7 +8,7 @@ const getAllTowns = async (req, res, next) => {
     try {
         if(name) {
             const town = await Towns.findOne({where: {name:name}})
-            town? res.send(town) : res.send({msg:"town not found"})
+            town? res.send(town) : res.status(404).send({msg:"town not found"})
         }
         const {count , rows} = await Towns.findAndCountAll({
             include: {model: Activities, as: "activities"}
@@ -21,7 +21,6 @@ const getAllTowns = async (req, res, next) => {
 
 const getOneById = async (req, res, next) => {
     let {id} = req.params;
-    
     
     try{
         let town = await Towns.findByPk(id,

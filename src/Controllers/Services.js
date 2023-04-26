@@ -16,7 +16,13 @@ const getAllServices = async (req,res,next) => {
 }
 
 const postService = async (req,res,next) => {
-    let {name,phone,webSite,Adress,description,images,punctuation,open,serviceTypeId} = req.body
+    let {name,phone,webSite,Adress,description,image,punctuation,open,serviceTypeId} = req.body
+
+    // if(typeof phone === "string") phone = parseInt(phone)
+    console.log(phone, punctuation)
+    if(typeof serviceTypeId === "string") serviceTypeId = parseInt(serviceTypeId)
+    if(typeof punctuation === "string") punctuation = parseInt(punctuation)
+
     try {
         await Service.create({
             name: name,
@@ -24,7 +30,7 @@ const postService = async (req,res,next) => {
             webSite: webSite,
             Adress:Adress,
             description:description,
-            images:images,
+            images:image,
             punctuation:punctuation,
             open:open,
             serviceTypeId:serviceTypeId
