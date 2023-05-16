@@ -36,7 +36,7 @@ const GetOneActivity = async (req,res,next) => {
 }
 
 const postActivity = async (req,res,next) => {
-    let {name, description, images,subCategoryId, townId, services } = req.body
+    let {name, description, images,subCategoryId, townsId, townId, services } = req.body;
     try{
         // const subCat = await SubCategories.findByPk(subCategoryId)
         const activity = await Activities.create({
@@ -45,6 +45,7 @@ const postActivity = async (req,res,next) => {
             images: images,
             likes: 0,
             subCategoryId:subCategoryId,
+            townsId: townsId, 
             townId: townId, 
         },
         {   include:[
@@ -87,18 +88,21 @@ const deleteActivity = async (req, res, next) => {
     }
 }
 
-const putActivity = async (req, res, next) => {
-    let {name, description,images,townsId,subCategoryId} = req.body
-    let {id} = req.params
-    console.log(req.body)
-    try{ 
-        
-        name && await Activities.update({name:name},{where:{id:id}})
-        description && await Activities.update({description:description},{where:{id:id}})
-        images && await Activities.update({images:images}, {where:{id:id}})
-        townsId && await Activities.update({townsId:townsId}, {where:{id:id}})
-        subCategoryId && await Activities.update({towsubCategoryId:subCategoryId}, {where:{id:id}})
+// const deleteSErviceInActivity = async (req, res, next) => {
 
+// }
+
+const putActivity = async (req, res, next) => {
+    let {townsId,subCategoryId,services} = req.body
+    let dates = req.body
+    let {id} = req.params
+    console.log(dates)
+    try{ 
+        const activity = await Activities.findOne({ where: { id } })
+        services && await activity.setServices(services)
+        subCategoryId && await activity.setSubCategories(subCategoryId)
+        townsId && await activity.setTowns(townsId)
+        await Activities.update(dates,{where:{id:id}})
         res.send({msg:"OK"})
     }catch(err){
         console.log(err)
