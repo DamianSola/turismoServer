@@ -3,7 +3,7 @@ const fs = require('fs')
 const dotenv = require('dotenv').config()
 const path = require('path')
 const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT
 } = process.env;
 // console.log(DB_HOST, DB_PASSWORD, DB_USER)
 
@@ -13,7 +13,7 @@ const sequelize =
         database: DB_NAME,
         dialect: "postgres",
         host: DB_HOST,
-        port: 5432,
+        port: PORT,
         username: DB_USER,
         password: DB_PASSWORD,
         pool: {
