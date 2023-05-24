@@ -45,29 +45,29 @@ const postCategories = async (req, res, next) => {
     }
 }
 
-const putCategories = async (req,res,next) => {
-    let {id} = req.params;
-    let {name} = req.body;
-    try{
-        if(name){
-            await Categories.update({name:name}, {where:{id: id}})
-            res.send({msg: "OK"})
-        }else{
-            res.send({msg: "without changes"})
+const putCategories = async (req, res, next) => {
+    let { id } = req.params;
+    let { name } = req.body;
+    try {
+        if (name) {
+            await Categories.update({ name: name }, { where: { id: id } })
+            res.send({ msg: "OK" })
+        } else {
+            res.send({ msg: "without changes" })
         }
-    }catch(err){
+    } catch (err) {
         next(err)
     }
 }
 
 const deleteCategories = async (req, res, next) => {
-    let {id} = req.params;
-    try{
-        await Categories.destroy({where: {id:id}})
-        res.send({msg: "category was deleted"})
-    }catch(err){
+    let { id } = req.params;
+    try {
+        await Categories.destroy({ where: { id: id } })
+        res.send({ msg: "category was deleted" })
+    } catch (err) {
         next(err)
     }
 }
 
-module.exports = {GetAllCategories , postCategories, putCategories, deleteCategories, GetByIdCategory}
+module.exports = { GetAllCategories, postCategories, putCategories, deleteCategories, GetByIdCategory }
