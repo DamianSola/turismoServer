@@ -46,19 +46,19 @@ const deleteSubCategory = async (req,res,next) => {
 }
 const putSubCategory = async (req,res,next) => {
     let {id} = req.params;
-    let {name} = req.body
+    let dates = req.body
     try{
-        await SubCategories.update({name : name}, {where : {id : id}})
-        res.send({msg: "Ok"})
+        let subCategory = await SubCategories.update(dates,{where:{id:id}})
+        res.send({msg: "Ok", subCategory})
     }catch(err){
         next(err)
     }
 }
 
 const postSubCategory = async (req,res,next) => {
-    let {name, categoryId, actividad, image} = req.body;
+    let {name, categoryId, description, image} = req.body;
     try{
-        await SubCategories.create({name: name, categoryId:categoryId, image:image},
+        await SubCategories.create({name: name, categoryId:categoryId, image:image, description:description},
             // {include:[{model: Activities, as: "actividad", forenigKey: actividad }]}
             )
         res.send({msg: "new sub category was created"})

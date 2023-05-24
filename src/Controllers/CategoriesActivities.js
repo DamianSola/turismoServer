@@ -37,7 +37,7 @@ const GetByIdCategory = async (req,res,next) => {
 const postCategories = async (req, res, next) => {
     let {name, image} = req.body
     try{
-        await Categories.create({name:name, image:image})
+        await Categories.create({name:name, image:image, description:description})
         res.send({msg: "new category was created"})
     }catch(err){
         console.log(err)
@@ -47,14 +47,10 @@ const postCategories = async (req, res, next) => {
 
 const putCategories = async (req, res, next) => {
     let { id } = req.params;
-    let { name } = req.body;
+    let dates = req.body;
     try {
-        if (name) {
-            await Categories.update({ name: name }, { where: { id: id } })
-            res.send({ msg: "OK" })
-        } else {
-            res.send({ msg: "without changes" })
-        }
+        await Categories.update(dates, { where: { id: id } })
+        res.send({ msg: "OK" })
     } catch (err) {
         next(err)
     }
