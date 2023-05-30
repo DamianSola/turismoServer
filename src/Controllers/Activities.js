@@ -46,7 +46,7 @@ const postActivity = async (req,res,next) => {
             likes: 0,
             subCategoryId:subCategoryId,
             townsId: townsId, 
-            townId: townId, 
+            // townId: townId, 
         },
         {   include:[
             {model: SubCategories, as: "subCategory"},
