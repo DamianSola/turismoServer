@@ -62,9 +62,6 @@ sequelize.models = Object.fromEntries(capsEntries);
 // console.log(sequelize.models)
 const {Activities, Towns, Categories, SubCategories, Culture, Service, ServiceTypes, Tours,} = sequelize.models
 
-// Towns.belongsToMany(Activities, {through:'towns_activities'})
-// Activities.belongsToMany(Towns, {through:'towns_activities'} )
-
 Towns.hasMany(Activities,{as: "activities", forenigKey: "activityId"})
 Activities.belongsTo(Towns, {as: "towns", forenigKey: "townsId"})
 
@@ -86,24 +83,6 @@ Service.belongsTo(ServiceTypes, {as: "serviceType", forenigKey: "serviceTypeId"}
 
 Service.belongsToMany(Tours, {through: 'service_tours'}) 
 Tours.belongsToMany(Service, {through:'service_tours'})
-
-// Activities.belongsToMany(Towns, {through:'activities_tows'})
-// Towns.belongsToMany(Activities, {through:'activities_tows'})
-// Categories.belongsToMany(SubCategories, {through:'Categories_SubCategories'})
-// SubCategories.belongsToMany(Categories,  {through:'Categories_SubCategories'})
-// Activities.belongsToMany(SubCategories, {through:'activities_subCategories'})
-// SubCategories.belongsToMany(Activities, {through:'activities_subCategories'})
-// Activities.belongsToMany(Culture, {through:'activities_culture'})
-// Culture.belongsToMany(Activities, {through:'activities_culture' })
-// Service.belongsTo(ServiceTypes, {through: "service-types"})
-// // ServiceTypes.belongsToMany(Service, {through: "service-types"})
-// Service.belongsToMany(Tours, {through: "service-tours"})
-// Tours.belongsToMany(Service, {through: "service-tours"})
-
-
-
-
-
 
 
 module.exports = {
