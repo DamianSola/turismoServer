@@ -15,4 +15,5 @@ router.use('/services', require("./Services.js"))
 router.use('/serviceTypes', require('./ServiceTypes'))
 router.use('/admin', require('./Admin'))
 router.use('/towns', require('./Towns'))
+router.use('/users', require('./Users'))
 module.exports = router

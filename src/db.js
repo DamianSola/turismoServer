@@ -60,7 +60,7 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 // console.log(sequelize.models)
-const {Activities, Towns, Categories, SubCategories, Culture, Service, ServiceTypes, Tours,} = sequelize.models
+const {Activities, Towns, Categories, SubCategories, Culture, Service, ServiceTypes, Tours, User} = sequelize.models
 
 Towns.hasMany(Activities,{as: "activities", forenigKey: "activityId"})
 Activities.belongsTo(Towns, {as: "towns", forenigKey: "townsId"})
