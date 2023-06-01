@@ -10,6 +10,7 @@ const getAllUser = async (req,res,next) => {
             const users = await User.findOne({where:{name:name}})
         }
     }catch(err){
+        next(err)
         console.log(err)
     }
 }
@@ -23,6 +24,7 @@ const loginUser = async (req,res,next) => {
         else res.send({msg: "not exist"})
     }catch(err){
         console.log(err)
+        next(err)
     }
 }
 
@@ -35,6 +37,7 @@ const registerUser = async (req,res,next) => {
         res.send(newUser)
     }catch(err){
         console.log(err)
+        next(err)
     }
 }
 

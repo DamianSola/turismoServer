@@ -20,10 +20,11 @@ module.exports = (sequelize) => {
         },
         confirm_email:{
             type: DataTypes.BOOLEAN,
-
+            allowNull: true
         },
         admin_jeff:{
             type: DataTypes.BOOLEAN,
+            allowNull: true
         },
         id:{
             type: DataTypes.UUID,
